@@ -15,3 +15,38 @@ Tecnologias:
 - Testes Unitários;
 - Arquitetura implementada;
 - Automação do ambiente.
+
+#
+## **Ciclo de vida:**
+- Estruturar
+- Desenvolver
+- Testar
+- Estilizar
+- Desenvolver testes
+- Melhorar código
+- >>> REFAZER O PROCESSO
+
+
+### **Processo:**
+* Estrutura
+    * Rotas
+    * Componente de dashboard - Graficos
+    * Componente Pesquisa
+    * Componente com Informações do Pokemon
+    * Componente com Informações do Pokemon - Detalhes
+    * Conexão com a API    
+    * Estilização
+* Desenvolvimento
+    * Rotas
+    * Componente de dashboard - Graficos
+    * Componente Pesquisa
+    * Componente com Informações do Pokemon
+    * Componente com Informações do Pokemon - Detalhes
+    * Conexão com a API    
+    * Estilização
+    * Testes unitários
+    * Testes unitários
+    * Melhorar código
+    
+
+
