@@ -1,35 +1,46 @@
 import { IPokemon } from "../interfaces/pokemon-interface";
+import { PokemonClient, Pokemon, NamedAPIResourceList } from "pokenode-ts";
 
-const baseUrl = "https://pokeapi.co/api/v2";
-const pokemonUrl = `${baseUrl}/pokemon`;
+const imagesUrl =
+  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
+export class PokemonService {
+  private readonly client: PokemonClient;
+  private nextListPage: string | null;
+  private previousListPage: string | null;
 
-export async function getPokemons(
-  limit: number = 10,
-  offset: number = 0
-): Promise<IPokemon[]> {
-  const response = await fetch(`${pokemonUrl}?limit=${limit}&offset=${offset}`);
-  const data = await response.json();
+  constructor() {
+    this.client = new PokemonClient();
+    this.nextListPage = null;
+    this.previousListPage = null;
+  }
 
-  const pokemons = data.results.map((pokemon: any) => {
-    console.log(pokemon);
+  public async getPokemons(
+    limit: number = 10,
+    offset: number = 0
+  ): Promise<IPokemon[]> {
+    const pokemonsListResult: NamedAPIResourceList =
+      await this.client.listPokemons(limit, offset);
+
+    this.nextListPage = pokemonsListResult.next;
+    this.previousListPage = pokemonsListResult.previous;
+
+    const pokemons: IPokemon[] = await Promise.all(
+        pokemonsListResult.results.map(async (pokemon) => {
+            const pokemonNormalized: IPokemon = await this.getPokemon(pokemon.name);
+            return pokemonNormalized;
+        })        
+    );
+
+    return pokemons;
+  }
+
+  public async getPokemon(name: string): Promise<IPokemon> {
+    const pokemon = await this.client.getPokemonByName(name);
 
     return {
       id: pokemon?.id,
       name: pokemon?.name,
-      imageSrc: pokemon?.sprites?.front_default,
+      imageSrc: `${imagesUrl}${pokemon?.id}.png`,
     } as IPokemon;
-  });
-
-  return pokemons;
-}
-
-export async function getPokemon(nameOrId: string): Promise<IPokemon> {
-  const response = await fetch(`${pokemonUrl}/${nameOrId}`);
-  const data = await response.json();
-
-  return {
-    id: data.id,
-    name: data.name,
-    imageSrc: data.sprites.front_default,
-  } as IPokemon;
+  }
 }

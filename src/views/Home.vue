@@ -1,7 +1,9 @@
 <script lang="ts">
-import { getPokemons } from "../utils/api";
+import { PokemonService } from "../utils/api";
 import { IPokemon } from "../interfaces/pokemon-interface";
 import PokeCard from "../components/PokeData/PokeCard.vue";
+
+const pokemonService = new PokemonService();
 
 export default {
   name: "Home",
@@ -12,7 +14,7 @@ export default {
     };
   },
   async created() {
-    this.pokemons = await getPokemons();
+    this.pokemons = await pokemonService.getPokemons();
     this.loading = false;
   },
   components: { PokeCard },
@@ -26,7 +28,6 @@ export default {
     <!-- TODO: Input para pesquisa + botao procurar -->
 
     <div v-if="loading" class="loading">
-      <!-- TODO: Add loading animation from bootstrap -->
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Carregando...</span>
       </div>

@@ -2,8 +2,10 @@
 //TODO: create a pokemon page
 
 import { defineComponent } from "vue";
-import { getPokemon } from "../utils/api";
+import { PokemonService } from "../utils/api";
 import { IPokemon } from "../interfaces/pokemon-interface";
+
+const pokemonService = new PokemonService();
 
 export default defineComponent({
   name: "Pokemon",
@@ -14,7 +16,7 @@ export default defineComponent({
     };
   },
   async created() {
-    this.pokemon = await getPokemon(`${this.$route.params.name}`);
+    this.pokemon = await pokemonService.getPokemon(`${this.$route.params.name}`);
     this.loading = false;
   },
 });
