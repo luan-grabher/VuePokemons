@@ -1,8 +1,7 @@
 import { IPokemon } from "../interfaces/pokemon-interface";
 import { PokemonClient, Pokemon, NamedAPIResourceList } from "pokenode-ts";
 
-const imagesUrl =
-  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
+const imagesUrl = "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/home/:id.png?raw=true";
 export class PokemonService {
   private readonly client: PokemonClient;
   private nextListPage: string | null;
@@ -15,11 +14,11 @@ export class PokemonService {
   }
 
   public async getPokemons(
-    limit: number = 10,
-    offset: number = 0
+    skip: number = 0,
+    take: number = 20 
   ): Promise<IPokemon[]> {
     const pokemonsListResult: NamedAPIResourceList =
-      await this.client.listPokemons(limit, offset);
+      await this.client.listPokemons(skip, take);
 
     this.nextListPage = pokemonsListResult.next;
     this.previousListPage = pokemonsListResult.previous;
@@ -36,11 +35,19 @@ export class PokemonService {
 
   public async getPokemon(name: string): Promise<IPokemon> {
     const pokemon = await this.client.getPokemonByName(name);
+    const pokemonNameUcaseFirst: string = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
 
     return {
       id: pokemon?.id,
-      name: pokemon?.name,
-      imageSrc: `${imagesUrl}${pokemon?.id}.png`,
+      name: pokemonNameUcaseFirst,
+      imageSrc: this.getPokemonImageSrc(pokemon),
     } as IPokemon;
+  }
+
+  private getPokemonImageSrc(pokemon: Pokemon): string {
+    const pokemonId: number = pokemon.id;
+    const pokemonIdString: string = pokemonId.toString();
+
+    return imagesUrl.replace(":id", pokemonIdString);
   }
 }

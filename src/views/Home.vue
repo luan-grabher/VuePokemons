@@ -32,9 +32,9 @@ export default {
         <span class="visually-hidden">Carregando...</span>
       </div>
     </div>
-    <div v-else class="pokemon-list">
+    <div v-else class="pokemon-list row mx-2 gap-2 justify-content-center">
       <!-- TODO: Add pokemon list -->
-      <div v-for="pokemon in pokemons" :key="pokemon.id">
+      <div v-for="pokemon in pokemons" :key="pokemon.id" class="pokemon-card col-12 col-sm-6 col-md-2">
         <PokeCard :pokemon="pokemon" v-if="pokemon.id" />
       </div>
     </div>

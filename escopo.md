@@ -42,11 +42,15 @@ Tecnologias:
     * Componente Pesquisa
     * Componente com Informações do Pokemon
     * Componente com Informações do Pokemon - Detalhes
-    * Conexão com a API    
+    * Conexão com a API
+    * Paginação
     * Estilização
     * Testes unitários
     * Testes unitários
     * Melhorar código
+
+* Extras:
+    * batalha entre pokemons -> escolhe um pokemon e outro pokemon aleatorio e batalha
     
 
 
