@@ -7,15 +7,16 @@ export async function getPokemons(
   limit: number = 10,
   offset: number = 0
 ): Promise<IPokemon[]> {
-  const response = await fetch(`{pokemonUrl}?limit=${limit}&offset=${offset}`);
+  const response = await fetch(`${pokemonUrl}?limit=${limit}&offset=${offset}`);
   const data = await response.json();
 
   const pokemons = data.results.map((pokemon: any) => {
+    console.log(pokemon);
 
     return {
-      id: pokemon.id,
-      name: pokemon.name,
-      imageSrc: pokemon.sprites.front_default,
+      id: pokemon?.id,
+      name: pokemon?.name,
+      imageSrc: pokemon?.sprites?.front_default,
     } as IPokemon;
   });
 
