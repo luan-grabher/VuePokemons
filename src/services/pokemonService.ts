@@ -4,13 +4,13 @@ import { PokemonClient, Pokemon, NamedAPIResourceList, Home } from "pokenode-ts"
 export const defaultTake: number = 20;
 export class PokemonService {
   private readonly client: PokemonClient;
-  private nextListPage: string | null;
-  private previousListPage: string | null;
+  private skipForNextPage: number;
+  private skipForPreviousPage: number;
 
   constructor() {
     this.client = new PokemonClient();
-    this.nextListPage = null;
-    this.previousListPage = null;
+    this.skipForNextPage = 0;
+    this.skipForPreviousPage = 0;
   }
 
   public async getPokemons(
@@ -20,8 +20,8 @@ export class PokemonService {
     const pokemonsListResult: NamedAPIResourceList =
       await this.client.listPokemons(skip, take);
 
-    this.nextListPage = pokemonsListResult.next;
-    this.previousListPage = pokemonsListResult.previous;
+    this.skipForNextPage = skip + take;
+    this.skipForPreviousPage =  (skip - take) < 0 ? 0 : skip - take;
 
     const pokemons: IPokemon[] = await Promise.all(
       pokemonsListResult.results.map(async (pokemon) => {
@@ -31,6 +31,14 @@ export class PokemonService {
     );
 
     return pokemons;
+  }
+
+  public async getNextPage(): Promise<IPokemon[]> {
+    return await this.getPokemons(this.skipForNextPage);
+  }
+
+  public async getPreviousPage(): Promise<IPokemon[]> {
+    return await this.getPokemons(this.skipForPreviousPage);
   }
 
   public async getPokemon(name: string): Promise<IPokemon> {

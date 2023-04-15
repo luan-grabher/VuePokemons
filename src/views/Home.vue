@@ -12,24 +12,22 @@ export default {
       pokemons: [] as IPokemon[],
       loading: true,
       searchTerm: "",
-      searchPokemon: () => {},
-      onKeyPressInput: (event: KeyboardEvent) => {},
+      loadPokemons: async (getPokemonsFunction: Function) => {},
+      searchPokemon: async () => {},
+      onKeyPressInput: (event: KeyboardEvent) => {
+        if (event.key === "Enter") this.searchPokemon();
+      },
+      getPreviousPage: () => {},
+      getNextPage: () => {},
     };
   },
   async created() {
-    this.searchPokemon = async () => {
+    this.loadPokemons = async (getPokemonsFunction: Function) => {
       this.pokemons = [];
       this.loading = true;
 
-      try {        
-        const hasSearchTerm = this.searchTerm.length > 0;
-        if (!hasSearchTerm) this.pokemons = await pokemonService.getPokemons();
-
-        if (hasSearchTerm) {
-          this.pokemons = await pokemonService.findPokemonsBySearchTerm(
-            this.searchTerm
-          );
-        }
+      try {
+        this.pokemons = await getPokemonsFunction();
       } catch (error) {
         console.log(error);
       } finally {
@@ -37,8 +35,33 @@ export default {
       }
     };
 
-    this.onKeyPressInput = (event: KeyboardEvent) => {
-      if (event.key === "Enter") this.searchPokemon();
+    this.searchPokemon = async () => {
+      let getPokemonsFunction = async () => {
+        return await pokemonService.getPokemons();
+      };
+
+      const hasSearchTerm = this.searchTerm.length > 0;
+      if (hasSearchTerm) {
+        getPokemonsFunction = async () => {
+          return await pokemonService.findPokemonsBySearchTerm(this.searchTerm);
+        };
+      }
+
+      this.loadPokemons(getPokemonsFunction);
+    };
+
+    this.getPreviousPage = async () => {
+      this.loadPokemons(async () => {
+        return await pokemonService.getPreviousPage();
+      });
+      window.scrollTo(0, 0);
+    };
+
+    this.getNextPage = async () => {
+      this.loadPokemons(async () => {
+        return await pokemonService.getNextPage();
+      });
+      window.scrollTo(0, 0);
     };
 
     this.searchPokemon();
@@ -52,27 +75,26 @@ export default {
 
   <div class="home">
     <div class="search-bar w-100 d-flex justify-content-center mb-4">
-        <div class="col-6 d-flex gap-2">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Pesquisar pokemon"
-            aria-label="Pesquisar pokemon"
-            aria-describedby="button-addon2"
-            v-model="searchTerm"
-            @keypress="onKeyPressInput"
-          />
-          <button
-            class="btn btn-outline-secondary"
-            type="button"
-            id="button-addon2"
-            @click="searchPokemon"
-            :disabled="searchTerm.length === 0"
-          >
-            Procurar
-          </button>
-        </div>
+      <div class="col-6 d-flex gap-2">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Pesquisar pokemon"
+          aria-label="Pesquisar pokemon"
+          aria-describedby="button-addon2"
+          v-model="searchTerm"
+          @keypress="onKeyPressInput"
+        />
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          id="button-addon2"
+          @click="searchPokemon"
+        >
+          Procurar
+        </button>
       </div>
+    </div>
 
     <div v-if="loading" class="loading">
       <div class="spinner-border" role="status">
@@ -93,6 +115,23 @@ export default {
         >
           <PokeCard :pokemon="pokemon" v-if="pokemon.id" />
         </div>
+      </div>
+
+      <div class="paginator w-100 d-flex gap-2 justify-content-center mt-4">
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          @click="getPreviousPage"
+        >
+          Anterior
+        </button>
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          @click="getNextPage"
+        >
+          Próximo
+        </button>
       </div>
     </div>
   </div>
