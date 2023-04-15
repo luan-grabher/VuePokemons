@@ -4,7 +4,7 @@ import PokemonVue from "../views/Pokemon.vue";
 
 const routes = [
   { path: "/", name: "Home", component: HomeVue },
-  { path: "/pokemon/:name", name: "Pokemon Details", component: PokemonVue },
+  { path: "/pokemon/:name", name: "Detalhes Pokemon", component: PokemonVue },
 ];
 
 export const router = createRouter({

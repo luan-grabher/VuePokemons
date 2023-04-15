@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import { PokemonService } from "../utils/api";
+import { PokemonService } from "../services/pokemonService";
 import { IPokemon } from "../interfaces/pokemon-interface";
 import PokeCard from "../components/PokeData/PokeCard.vue";
 
