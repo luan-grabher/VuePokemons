@@ -8,6 +8,7 @@ import { normalizePokemon } from "../normalizers/pokemonNormalizer";
 export const defaultTake: number = 20;
 export class PokemonService {
   private readonly client: PokemonClient;
+  private allPokemons: IPokemon[] = [];
   private skipForNextPage: number;
   private skipForPreviousPage: number;
 
@@ -17,24 +18,31 @@ export class PokemonService {
     this.skipForPreviousPage = 0;
   }
 
-  public async getPokemons(
-    skip: number = 0,
-    take: number = defaultTake
-  ): Promise<IPokemon[]> {
-    const pokemonsListResult: NamedAPIResourceList =
-      await this.client.listPokemons(skip, take);
+  public async loadAllPokemons(): Promise<void> {
+    const isAllPokemonsAlreadyFetched: boolean = this.allPokemons.length > 0;
+    if (isAllPokemonsAlreadyFetched) return;
 
-    this.skipForNextPage = skip + take;
-    this.skipForPreviousPage = skip - take < 0 ? 0 : skip - take;
+    const allPokemonsApi : NamedAPIResourceList = await this.client.listPokemons(0, 10000);
 
-    const pokemons: IPokemon[] = await Promise.all(
-      pokemonsListResult.results.map(async (pokemon) => {
+    const allPokemons: IPokemon[] = await Promise.all(
+      allPokemonsApi.results.map(async (pokemon) => {
         const pokemonNormalized: IPokemon = (await this.getPokemon(
           pokemon.name
         )) as IPokemon;
         return pokemonNormalized;
       })
     );
+
+    this.allPokemons = allPokemons;
+  }
+
+  public async getPokemons(
+    skip: number = 0,
+    take: number = defaultTake
+  ): Promise<IPokemon[]> {
+    const pokemons = this.allPokemons.slice(skip, skip + take);
+    this.skipForNextPage = skip + take;
+    this.skipForPreviousPage = skip - take < 0 ? 0 : skip - take;
 
     return pokemons;
   }
@@ -68,8 +76,8 @@ export class PokemonService {
 
     const termLowerCase = searchTerm.toLowerCase();
 
-    const allPokemons = await this.getPokemons(0, 10000);
-    const pokemonsFound = allPokemons.filter((pokemon) => {
+
+    const pokemonsFound = this.allPokemons.filter((pokemon) => {
       const pokemonNameLowerCase = pokemon.name.toLowerCase();
       const pokemonNameContainsTerm =
         pokemonNameLowerCase.includes(termLowerCase);

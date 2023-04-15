@@ -1,73 +1,67 @@
-<script lang="ts">
+<script lang="ts" setup>
+import { onMounted, reactive, Ref, ref } from "vue";
 import { IPokemon } from "../../interfaces/pokemon-interface";
 import { PokemonService } from "../../services/pokemonService";
 import PokeCard from "../PokeData/PokeCard.vue";
 
 const pokemonService = new PokemonService();
 
-export default {
-    name: "PokemonList",
-    data() {
-        return {
-            pokemons: [] as IPokemon[],
-            loading: true,
-            searchTerm: "",
-            loadPokemons: async (getPokemonsFunction: Function) => { },
-            searchPokemon: async () => { },
-            onKeyPressInput: (event: KeyboardEvent) => {
-                if (event.key === "Enter") this.searchPokemon();
-            },
-            getPreviousPage: () => { },
-            getNextPage: () => { },
-        };
-    },
-    async created() {
-        this.loadPokemons = async (getPokemonsFunction: Function) => {
-            this.pokemons = [];
-            this.loading = true;
+const loading: Ref<Boolean> = ref(true);
+let pokemons: IPokemon[] = reactive([]);
+const searchTerm: Ref<string> = ref("");
 
-            try {
-                this.pokemons = await getPokemonsFunction();
-            } catch (error) {
-                console.log(error);
-            } finally {
-                this.loading = false;
-            }
-        };
+async function loadPokemons(getPokemonsFunction: Function) {
+    pokemons = [];
 
-        this.searchPokemon = async () => {
-            let getPokemonsFunction = async () => {
-                return await pokemonService.getPokemons();
-            };
+    loading.value = true;
 
-            const hasSearchTerm = this.searchTerm.length > 0;
-            if (hasSearchTerm) {
-                getPokemonsFunction = async () => {
-                    return await pokemonService.findPokemonsBySearchTerm(this.searchTerm);
-                };
-            }
-
-            this.loadPokemons(getPokemonsFunction);
-        };
-
-        this.getPreviousPage = async () => {
-            this.loadPokemons(async () => {
-                return await pokemonService.getPreviousPage();
-            });
-            window.scrollTo(0, 0);
-        };
-
-        this.getNextPage = async () => {
-            this.loadPokemons(async () => {
-                return await pokemonService.getNextPage();
-            });
-            window.scrollTo(0, 0);
-        };
-
-        this.searchPokemon();
-    },
-    components: { PokeCard },
+    try {
+        pokemons = await getPokemonsFunction();
+    } catch (error) {
+        console.log(error);
+    } finally {
+        loading.value = false;
+    }
 };
+
+async function searchPokemon() {
+    let getPokemonsFunction = async () => {
+        return await pokemonService.getPokemons();
+    };
+
+    const hasSearchTerm = searchTerm.value.length > 0;
+
+    if (hasSearchTerm) {
+        getPokemonsFunction = async () => {
+            return await pokemonService.findPokemonsBySearchTerm(searchTerm.value);
+        };
+    }
+
+    await loadPokemons(getPokemonsFunction);
+};
+
+async function getPreviousPage() {
+    await loadPokemons(async () => {
+        return await pokemonService.getPreviousPage();
+    });
+    window.scrollTo(0, 0);
+};
+
+async function getNextPage() {
+    await loadPokemons(async () => {
+        return await pokemonService.getNextPage();
+    });
+    window.scrollTo(0, 0);
+};
+
+function onKeyPressInput(event: KeyboardEvent) {
+    if (event.key === "Enter") searchPokemon();
+};
+
+onMounted(async () => {   
+    await pokemonService.loadAllPokemons(); 
+    await searchPokemon();
+});
 </script>
 
 <template>

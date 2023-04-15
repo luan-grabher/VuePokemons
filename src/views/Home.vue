@@ -1,52 +1,35 @@
-<script lang="ts">
+<script lang="ts" setup>
+import { ref } from "vue";
 import Dashboard from "../components/Dashboard/Dashboard.vue";
-import IconPokeballVue from "../components/Icons/IconPokeball.vue";
+import IconPokeball from "../components/Icons/IconPokeball.vue";
 import PokemonList from "../components/PokemonList/PokemonList.vue";
 
-const tabs = [
+interface Tab {
+  name: string;
+  component: any;
+  icon: any;
+}
+
+const tabs: Tab[] = [
   {
     name: "Dashboard",
-    component: Dashboard,
-    icon: IconPokeballVue,
-  },
+    icon: IconPokeball,
+  } as Tab,
   {
     name: "Pokemons",
-    component: PokemonList,
-    icon: IconPokeballVue,
-  },
+    icon: IconPokeball,
+  } as Tab,
 ];
 
-const currentTab = tabs[0];
-
-export default {
-  name: "Home",
-  components: {
-    PokemonList,
-    Dashboard,
-  },
-  data() {
-    return {
-      tabs,
-      currentTab,
-      fillIconSelected: "#000",
-      fillIconNotSelected: "red",
-    };
-  },
-};
-
-console.log(currentTab);
+const currentTab = ref(tabs[0]);
+const fillIconSelected = ref("#000");
 </script>
 
 <template>
   <div class="home">
     <div class="tabs">
-      <div
-        v-for="tab in tabs"
-        :key="tab.name"
-        class="tab"
-        :class="{ active: tab.name === currentTab.name }"
-        @click="currentTab = tab"
-      >
+      <div v-for="tab in tabs" :key="tab.name" class="tab" :class="{ active: tab.name === currentTab.name }"
+        @click="currentTab = tab">
         <div class="icon">
           <component :is="tab.icon" :fill="fillIconSelected" />
         </div>
@@ -54,7 +37,10 @@ console.log(currentTab);
       </div>
     </div>
 
-    <component :is="currentTab.component" />
+    <div class="tab-contents">
+      <Dashboard v-if="currentTab.name === 'Dashboard'" />
+      <PokemonList v-if="currentTab.name === 'Pokemons'" />
+    </div>
   </div>
 </template>
 
