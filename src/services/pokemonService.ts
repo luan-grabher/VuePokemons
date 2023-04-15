@@ -1,5 +1,11 @@
 import { IPokemon } from "../interfaces/pokemon-interface";
-import { PokemonClient, Pokemon, NamedAPIResourceList, Home } from "pokenode-ts";
+import {
+  PokemonClient,
+  Pokemon,
+  NamedAPIResourceList,
+  Home,
+} from "pokenode-ts";
+import { normalizePokemon } from "../normalizers/pokemonNormalizer";
 
 export const defaultTake: number = 20;
 export class PokemonService {
@@ -21,11 +27,13 @@ export class PokemonService {
       await this.client.listPokemons(skip, take);
 
     this.skipForNextPage = skip + take;
-    this.skipForPreviousPage =  (skip - take) < 0 ? 0 : skip - take;
+    this.skipForPreviousPage = skip - take < 0 ? 0 : skip - take;
 
     const pokemons: IPokemon[] = await Promise.all(
       pokemonsListResult.results.map(async (pokemon) => {
-        const pokemonNormalized: IPokemon = await this.getPokemon(pokemon.name);
+        const pokemonNormalized: IPokemon = (await this.getPokemon(
+          pokemon.name
+        )) as IPokemon;
         return pokemonNormalized;
       })
     );
@@ -41,32 +49,11 @@ export class PokemonService {
     return await this.getPokemons(this.skipForPreviousPage);
   }
 
-  public async getPokemon(name: string): Promise<IPokemon> {
+  public async getPokemon(name: string): Promise<IPokemon | null> {
     const pokemon = await this.client.getPokemonByName(name.toLowerCase());
-    if (!pokemon) {
-      return {
-        id: 0,
-        name: "Not found",
-        imageSrc: "",
-      };
-    }
+    const pokemonNormalized = normalizePokemon(pokemon);
 
-    const pokemonNameUcaseFirst: string =
-      pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
-
-    return {
-      id: pokemon?.id,
-      name: pokemonNameUcaseFirst,
-      imageSrc: this.getPokemonImageSrc(pokemon),
-    } as IPokemon;
-  }
-
-  private getPokemonImageSrc(pokemon: Pokemon): string {
-    const defaultImageSrc: string = "https://via.placeholder.com/96x96.png?text=Pokemon+nao+encontrado";
-    const defaultFrontImageSrc: string | null = pokemon?.sprites?.front_default;
-    const homeImageSrc: string | null | undefined = pokemon?.sprites?.other?.home?.front_default;
-
-    return homeImageSrc || defaultFrontImageSrc || defaultImageSrc;
+    return pokemonNormalized;
   }
 
   public async findPokemonsBySearchTerm(
@@ -76,6 +63,8 @@ export class PokemonService {
 
     if (isTermInteger) {
       const pokemon = await this.getPokemon(searchTerm);
+      if (!pokemon) return [];
+
       return [pokemon];
     }
 

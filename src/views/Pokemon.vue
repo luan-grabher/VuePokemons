@@ -10,7 +10,7 @@ export default defineComponent({
     name: "Pokemon",
     data() {
         return {
-            pokemon: {} as IPokemon,
+            pokemon: {} as IPokemon | null,
             loading: true,
         };
     },
@@ -26,7 +26,7 @@ export default defineComponent({
 <template>
   <div class="detalhes-pokemon">
     <!-- TODO: mostrar os detalhes de uma forma diferente e remover o PokeCard -->
-    <PokeCard :pokemon="pokemon" v-if="pokemon.id" />
+    <PokeCard :pokemon="pokemon" v-if="pokemon" />
   </div>
 </template>
 
