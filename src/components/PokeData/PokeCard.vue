@@ -17,11 +17,32 @@ export default defineComponent({
 <template>
   <div class="w-100" v-if="pokemon">
     <router-link :to="`/pokemon/${pokemon.name}`">
-      <div class="card p-3">
+      <div class="card p-3 shadow">
         <img :src="pokemon.imageSrc" alt="poke-sprite" />
-        <p>#{{ pokemon.id }}</p>
-        <p>{{ pokemon.name }}</p>
-        <!-- TODO: Adicionar demais informações do pokemon -->
+        <div class="pokemon-title">
+          <p>#{{ pokemon.id }}</p>
+          <p>{{ pokemon.name }}</p>
+        </div>
+        <div class="pokemon-types">
+          <p v-for="tipo in pokemon.tipos" :key="tipo">
+            {{ tipo }}
+          </p>
+        </div>
+        <div class="pokemon-sizes">
+          <p>Altura: {{ pokemon.altura }}m</p>
+          <p>Peso: {{ pokemon.peso }}kg</p>
+        </div>
+        <div class="pokemon-habilities d-flex gap-2">
+          <p>Habilidades: 
+            <span v-for="habilidade in pokemon.habilidades" :key="habilidade" class="badge bg-secondary">
+              {{ habilidade }}
+            </span>
+          </p>
+        </div>
+
+        <button class="btn btn-outline-secondary" type="button">
+        Detalhes
+      </button>
       </div>
     </router-link>
   </div>
