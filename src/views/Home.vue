@@ -1,138 +1,95 @@
 <script lang="ts">
-import { PokemonService } from "../services/pokemonService";
-import { IPokemon } from "../interfaces/pokemon-interface";
-import PokeCard from "../components/PokeData/PokeCard.vue";
+import Dashboard from "../components/Dashboard/Dashboard.vue";
+import IconPokeballVue from "../components/Icons/IconPokeball.vue";
+import PokemonList from "../components/PokemonList/PokemonList.vue";
 
-const pokemonService = new PokemonService();
+const tabs = [
+  {
+    name: "Dashboard",
+    component: Dashboard,
+    icon: IconPokeballVue,
+  },
+  {
+    name: "Pokemons",
+    component: PokemonList,
+    icon: IconPokeballVue,
+  },
+];
+
+const currentTab = tabs[0];
 
 export default {
   name: "Home",
+  components: {
+    PokemonList,
+    Dashboard,
+  },
   data() {
     return {
-      pokemons: [] as IPokemon[],
-      loading: true,
-      searchTerm: "",
-      loadPokemons: async (getPokemonsFunction: Function) => {},
-      searchPokemon: async () => {},
-      onKeyPressInput: (event: KeyboardEvent) => {
-        if (event.key === "Enter") this.searchPokemon();
-      },
-      getPreviousPage: () => {},
-      getNextPage: () => {},
+      tabs,
+      currentTab,
+      fillIconSelected: "#000",
+      fillIconNotSelected: "red",
     };
   },
-  async created() {
-    this.loadPokemons = async (getPokemonsFunction: Function) => {
-      this.pokemons = [];
-      this.loading = true;
-
-      try {
-        this.pokemons = await getPokemonsFunction();
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.loading = false;
-      }
-    };
-
-    this.searchPokemon = async () => {
-      let getPokemonsFunction = async () => {
-        return await pokemonService.getPokemons();
-      };
-
-      const hasSearchTerm = this.searchTerm.length > 0;
-      if (hasSearchTerm) {
-        getPokemonsFunction = async () => {
-          return await pokemonService.findPokemonsBySearchTerm(this.searchTerm);
-        };
-      }
-
-      this.loadPokemons(getPokemonsFunction);
-    };
-
-    this.getPreviousPage = async () => {
-      this.loadPokemons(async () => {
-        return await pokemonService.getPreviousPage();
-      });
-      window.scrollTo(0, 0);
-    };
-
-    this.getNextPage = async () => {
-      this.loadPokemons(async () => {
-        return await pokemonService.getNextPage();
-      });
-      window.scrollTo(0, 0);
-    };
-
-    this.searchPokemon();
-  },
-  components: { PokeCard },
 };
+
+console.log(currentTab);
 </script>
 
 <template>
-  <!-- TODO: Adicionar tabs e mostrar por padrao o dashboard com graficos sobre os pokemons -->
-
   <div class="home">
-    <div class="search-bar w-100 d-flex justify-content-center mb-4">
-      <div class="col-6 d-flex gap-2">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Pesquisar pokemon"
-          aria-label="Pesquisar pokemon"
-          aria-describedby="button-addon2"
-          v-model="searchTerm"
-          @keypress="onKeyPressInput"
-        />
-        <button
-          class="btn btn-outline-secondary"
-          type="button"
-          id="button-addon2"
-          @click="searchPokemon"
-        >
-          Procurar
-        </button>
-      </div>
-    </div>
-
-    <div v-if="loading" class="loading">
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden">Carregando...</span>
-      </div>
-    </div>
-
-    <div v-if="!loading && pokemons.length === 0" class="no-pokemons">
-      <h1>Nenhum pokemon encontrado</h1>
-    </div>
-
-    <div v-if="!loading && pokemons.length > 0">
-      <div class="pokemon-list row mx-2 gap-2 justify-content-center">
-        <div
-          v-for="pokemon in pokemons"
-          :key="pokemon.id"
-          class="pokemon-card col-12 col-sm-6 col-md-2"
-        >
-          <PokeCard :pokemon="pokemon" v-if="pokemon.id" />
+    <div class="tabs">
+      <div
+        v-for="tab in tabs"
+        :key="tab.name"
+        class="tab"
+        :class="{ active: tab.name === currentTab.name }"
+        @click="currentTab = tab"
+      >
+        <div class="icon">
+          <component :is="tab.icon" :fill="fillIconSelected" />
         </div>
-      </div>
-
-      <div class="paginator w-100 d-flex gap-2 justify-content-center mt-4">
-        <button
-          class="btn btn-outline-secondary"
-          type="button"
-          @click="getPreviousPage"
-        >
-          Anterior
-        </button>
-        <button
-          class="btn btn-outline-secondary"
-          type="button"
-          @click="getNextPage"
-        >
-          Próximo
-        </button>
+        {{ tab.name }}
       </div>
     </div>
+
+    <component :is="currentTab.component" />
   </div>
 </template>
+
+<style lang="scss" scoped>
+.home {
+  .tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+
+    .tab {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+
+      .icon {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+      }
+
+      &.active {
+        color: #000;
+        font-weight: bold;
+        border-bottom: 2px solid #000;
+      }
+    }
+  }
+}
+</style>

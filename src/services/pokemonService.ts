@@ -1,9 +1,7 @@
 import { IPokemon } from "../interfaces/pokemon-interface";
 import {
   PokemonClient,
-  Pokemon,
   NamedAPIResourceList,
-  Home,
 } from "pokenode-ts";
 import { normalizePokemon } from "../normalizers/pokemonNormalizer";
 
