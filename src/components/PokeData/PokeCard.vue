@@ -29,7 +29,7 @@ export default defineComponent({
           </p>
         </div>
         <div class="pokemon-sizes">
-          <p>Altura: {{ pokemon.altura }}m</p>
+          <p>Altura: {{ pokemon.altura }}cm</p>
           <p>Peso: {{ pokemon.peso }}kg</p>
         </div>
         <div class="pokemon-habilities d-flex gap-2">
