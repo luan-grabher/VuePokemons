@@ -1,7 +1,7 @@
 import { IPokemon } from "../interfaces/pokemon-interface";
 import { PokemonClient, Pokemon, NamedAPIResourceList, Home } from "pokenode-ts";
 
-const defaultTake: number = 20;
+export const defaultTake: number = 20;
 export class PokemonService {
   private readonly client: PokemonClient;
   private nextListPage: string | null;

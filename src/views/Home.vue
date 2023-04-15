@@ -13,6 +13,7 @@ export default {
       loading: true,
       searchTerm: "",
       searchPokemon: () => {},
+      onKeyPressInput: (event: KeyboardEvent) => {},
     };
   },
   async created() {
@@ -36,6 +37,10 @@ export default {
       }
     };
 
+    this.onKeyPressInput = (event: KeyboardEvent) => {
+      if (event.key === "Enter") this.searchPokemon();
+    };
+
     this.searchPokemon();
   },
   components: { PokeCard },
@@ -55,6 +60,7 @@ export default {
             aria-label="Pesquisar pokemon"
             aria-describedby="button-addon2"
             v-model="searchTerm"
+            @keypress="onKeyPressInput"
           />
           <button
             class="btn btn-outline-secondary"
