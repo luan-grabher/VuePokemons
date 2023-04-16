@@ -28,9 +28,7 @@ import PokemonTypesChart from './PokemonTypesChart.vue';
             </div>
             <div class="chart col-12 col-md-4">
                 <h2>Habilidades mais raras:</h2>
-                <!--
                 <PokemonAbilitiesChart />
-                -->
             </div>
         </div>
     </div>
