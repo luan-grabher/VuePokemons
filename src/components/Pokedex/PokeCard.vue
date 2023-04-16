@@ -1,5 +1,6 @@
 <script  lang="ts" setup>
 import { IPokemon } from "../../interfaces/pokemon-interface";
+import PokemonSizes from "./PokemonSizes.vue";
 import PokemonTypes from "./PokemonTypes.vue";
 
 const props = defineProps({
@@ -26,8 +27,7 @@ const pokemon: IPokemon | null = props.pokemon;
           <PokemonTypes :pokemonTypes="pokemon.tipos" />
         </div>
         <div class="pokemon-sizes">
-          <p>Altura: {{ pokemon.altura }}cm</p>
-          <p>Peso: {{ pokemon.peso }}kg</p>
+          <PokemonSizes :altura="pokemon.altura" :peso="pokemon.peso" />
         </div>
         <div class="pokemon-habilities d-flex gap-2">
           <p>Habilidades: 
@@ -36,10 +36,6 @@ const pokemon: IPokemon | null = props.pokemon;
             </span>
           </p>
         </div>
-
-        <button class="btn btn-outline-secondary" type="button">
-        Detalhes
-      </button>
       </div>
     </router-link>
   </div>
@@ -80,6 +76,14 @@ a {
       color: $gray-medium;
       font-weight: bold;
     }
+  }
+
+  .pokemon-types{
+    margin-top: 0.5rem;
+  }
+
+  .pokemon-sizes{
+    margin-block: 1rem;
   }
 }
 </style>
