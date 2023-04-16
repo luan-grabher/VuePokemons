@@ -7,7 +7,7 @@ export interface IPokemon {
   tipos: string[];
   habilidades: string[];
 
-  //DADOS EXTRAS PARA A TELA DE DETALHES
+  
   games: string[];
   quantidadeMovimentosDisponiveis: number;
   vida: number;

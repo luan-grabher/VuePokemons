@@ -1,30 +1,55 @@
 <script lang="ts" setup>
-import PokemonAbilitiesChart from './PokemonAbilitiesChart.vue';
-import PokemonGenerationChart from './PokemonGenerationChart.vue';
-import PokemonTypesChart from './PokemonTypesChart.vue';
-import PokemonLocationsChart from './PokemonLocationsChart.vue';
+import PokemonAbilitiesChart from "./PokemonAbilitiesChart.vue";
+import PokemonGenerationChart from "./PokemonGenerationChart.vue";
+import PokemonTypesChart from "./PokemonTypesChart.vue";
+import PokemonLocationsChart from "./PokemonLocationsChart.vue";
 </script>
 
 <template>
     <div class="dashboard">
-        <h1>Alguns dados sobre os Pokemons:</h1>
         <div class="charts d-flex flex-wrap">
             <div class="chart col-12 col-md-6">
-                <h2>Pokemons por tipo:</h2>
-                <PokemonTypesChart />                
+                <h2>Pokemom Quantity by Type:</h2>
+                <PokemonTypesChart />
             </div>
             <div class="chart col-12 col-md-6">
-                <h2>Pokemons por geração:</h2>
-                <PokemonGenerationChart />
-            </div>
-            <div class="chart col-12 col-md-6">
-                <h2>Habilidades mais raras:</h2>
+                <h2>Most common abilities:</h2>
                 <PokemonAbilitiesChart />
             </div>
             <div class="chart col-12 col-md-6">
-                <h2>Localizações com mais pokemons:</h2>
+                <h2>Pokemom Quantity by Generation:</h2>
+                <PokemonGenerationChart />
+            </div>
+            <div class="chart col-12 col-md-6">
+                <h2>Locations with most pokemons:</h2>
                 <PokemonLocationsChart />
             </div>
         </div>
     </div>
 </template>
+
+<style lang="scss" scoped>
+@import "../../assets/scss/variables.scss";
+
+.dashboard {
+    background-color: $gray-light;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+    padding: 3rem;
+    opacity: 0.8;
+
+    .charts {
+        .chart {
+            padding-bottom: 4rem;
+            text-align: center;
+
+            h2 {
+                color: $dark;
+                text-transform: uppercase;
+                font-size: 1.2rem;
+                font-weight: bold;
+            }
+        }
+    }
+}
+</style>
