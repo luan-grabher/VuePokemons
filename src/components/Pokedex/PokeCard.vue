@@ -10,9 +10,6 @@ const props = defineProps({
         required: true
     }
 });
-
-const pokemon: IPokemon | null = props.pokemon;
-
 </script>
 
 <template>
@@ -66,6 +63,7 @@ a {
     .pokemon-name{
       font-size: 1.5rem;
       font-weight: 600;
+      text-transform: capitalize;
     }
     .pokemon-id{
       font-size: 1rem;

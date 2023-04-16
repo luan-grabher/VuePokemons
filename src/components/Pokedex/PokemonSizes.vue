@@ -10,52 +10,50 @@ const props = defineProps({
     peso: {
         type: Number,
         required: true,
+    },
+    textAlign: {
+        type: String,
+        required: false
     }
 });
-
-const altura: Ref<number> = ref(props.altura);
-const peso: Ref<number> = ref(props.peso);
-
-
 </script>
 
 <template>
     <div class="pokemon-sizes-content d-flex">
-        <div class="col-6 text-center">
+        <div class="col-6" :class="`text-${textAlign || 'center'}`">
             <div class="size-label">
-                <i class="fa-solid fa-up-down" ></i>
+                <i class="fa-solid fa-up-down"></i>
                 Altura
             </div>
-            <div class="size-value">                
+            <div class="size-value">
                 {{ altura }}cm
             </div>
         </div>
-        <div class="col-6 text-center">
-            <div class="size-label">
-                <i class="fa-solid fa-weight-hanging" ></i>
-                Peso
-            </div>
-            <div class="size-value">
-                {{ peso }}kg
-            </div>
+        <div class="col-6" :class="`text-${textAlign || 'center'}`">
+        <div class="size-label">
+            <i class="fa-solid fa-weight-hanging"></i>
+            Peso
+        </div>
+        <div class="size-value">
+            {{ peso }}kg
         </div>
     </div>
-</template>
+</div></template>
 
 <style scoped lang="scss">
-    @import "../../assets/scss/variables.scss";
+@import "../../assets/scss/variables.scss";
 
-    .pokemon-sizes-content{
-        .size-label {
-            font-size: 0.7rem;
-            font-weight: bold;
-            color: $gray;
-        }
-
-        .size-value {
-            color: $primary;
-            font-size: 1rem;
-            font-weight: bold;
-        }
+.pokemon-sizes-content {
+    .size-label {
+        font-size: 0.7rem;
+        font-weight: bold;
+        color: $gray;
     }
+
+    .size-value {
+        color: $primary;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+}
 </style>
