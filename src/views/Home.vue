@@ -38,8 +38,8 @@ const fillIconSelected = ref("#000");
     </div>
 
     <div class="tab-contents">
-      <Dashboard v-if="currentTab.name === 'Dashboard'" />
-      <PokemonList v-if="currentTab.name === 'Pokemons'" />
+      <Dashboard v-show="currentTab.name === 'Dashboard'" />
+      <PokemonList v-show="currentTab.name === 'Pokemons'" />
     </div>
   </div>
 </template>

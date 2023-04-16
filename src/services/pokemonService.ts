@@ -56,8 +56,15 @@ export class PokemonService {
   }
 
   public async getPokemon(name: string): Promise<IPokemon | null> {
-    const pokemon = await this.client.getPokemonByName(name.toLowerCase());
-    const pokemonNormalized = normalizePokemon(pokemon);
+    const lowerCaseSearch = name.toLowerCase();
+
+    const pokemonOnList = this.allPokemons.find(
+      (pokemon) => !!pokemon?.tipos && pokemon.name.toLowerCase() === lowerCaseSearch
+    );
+    if (pokemonOnList) return pokemonOnList;
+
+    const pokemonFromApi = await this.client.getPokemonByName(lowerCaseSearch);
+    const pokemonNormalized = normalizePokemon(pokemonFromApi);
 
     return pokemonNormalized;
   }
