@@ -26,10 +26,15 @@ const fillIconSelected = ref("#000");
 </script>
 
 <template>
-  <div class="home">
+  <div class="home container-lg">
     <div class="tabs">
-      <div v-for="tab in tabs" :key="tab.name" class="tab" :class="{ active: tab.name === currentTab.name }"
-        @click="currentTab = tab">
+      <div
+        v-for="tab in tabs"
+        :key="tab.name"
+        class="tab"
+        :class="{ active: tab.name === currentTab.name }"
+        @click="currentTab = tab"
+      >
         <div class="icon">
           <component :is="tab.icon" :fill="fillIconSelected" />
         </div>
