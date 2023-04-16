@@ -24,7 +24,8 @@ import PokemonTypesChart from './PokemonTypesChart.vue';
                 <PokemonTypesChart />                
             </div>
             <div class="chart col-12 col-md-4">
-                <!-- <PokemonGenerationChart /> -->
+                <h2>Pokemons por geração:</h2>
+                <PokemonGenerationChart />
             </div>
             <div class="chart col-12 col-md-4">
                 <h2>Habilidades mais raras:</h2>

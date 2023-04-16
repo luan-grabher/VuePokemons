@@ -2,40 +2,83 @@
 /*
 - [ ]  Quantidade de pokemons por geração -> /api/v2/generation/ (ChartType: Line)
 */
-import { NamedAPIResourceList, PokemonClient } from "pokenode-ts";
+import { GameClient } from "pokenode-ts";
 import { Line } from "vue-chartjs";
 import {
   Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
   CategoryScale,
   LinearScale,
-} from "chart.js";
-
-ChartJS.register(
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
-  BarElement,
+ChartData
+} from "chart.js";
+import { onMounted, reactive, ref } from "vue";
+import { getRandomColor } from "../../helpers/dashboardHelpers";
+
+ChartJS.register(
   CategoryScale,
-  LinearScale
-);
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+)
 
-const pokemonClient = new PokemonClient();
+let chartData: any = ref({
+  labels: [],
+  datasets: [
+    {
+      label: "Pokemons por geração",
+      data: [],
+      backgroundColor: getRandomColor(),
+    },
+  ],
+});
 
-const pokemonGenerationsFromApi = []; //TODO: get generations from api
-const pokemonGenerations = []; //TODO: for each generation get details with pokemons
+async function loadGenerations() {
+  const gameClient = new GameClient();
 
-const labels = []; //TODO: normalize labels with generation names
-const data = []; //TODO: normalize data with generation pokemons count
+  const pokemonGenerationsFromApi = await gameClient.listGenerations();
+  const pokemonGenerations = await Promise.all(
+    pokemonGenerationsFromApi.results.map(async (pokemonGeneration) => {
+      const generationFromApi = await gameClient.getGenerationByName(
+        pokemonGeneration.name
+      );
+      const nameWithFirstLetterUppercase =
+        pokemonGeneration.name.charAt(0).toUpperCase() +
+        pokemonGeneration.name.slice(1);
+
+      return {
+        ...generationFromApi,
+        name: nameWithFirstLetterUppercase,
+      };
+    })
+  );
+
+  chartData.value = {
+    labels: pokemonGenerations.map((pokemonGeneration) => pokemonGeneration.name),
+    datasets: [
+      {
+        label: "Pokemons por geração",
+        data: pokemonGenerations.map((pokemonGeneration) => pokemonGeneration.pokemon_species.length),
+        backgroundColor: getRandomColor(),
+      },
+    ]
+  }
+}
+
+onMounted(async () => {
+  await loadGenerations();
+});
 
 </script>
 
 <template>
   <div class="tipos">
-    chart de gerações
-    <Line :data="data" />
+    <Line :data="chartData" />
   </div>
 </template>

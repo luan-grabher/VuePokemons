@@ -14,8 +14,7 @@ import {
   Legend,
   ChartData,
 } from "chart.js";
-import { onMounted, reactive } from "vue";
-import { getBackgroundColorsRandomly } from "../../helpers/dashboardHelpers";
+import { onMounted, reactive, ref } from "vue";
 
 ChartJS.register(
   RadialLinearScale,
@@ -26,8 +25,7 @@ ChartJS.register(
   Legend
 );
 
-const pokemonClient = new PokemonClient();
-let chartData: ChartData<"radar", number[], string> = reactive({
+let chartData: any = ref({
   labels: [],
   datasets: [
     {
@@ -48,6 +46,8 @@ const chartOptions = reactive({
 });
 
 async function loadAbilities() {
+  const pokemonClient = new PokemonClient();
+
   const abilitiesFromApi = await pokemonClient.listAbilities();
   const abilities = await Promise.all(
     abilitiesFromApi.results.map(async (ability) => {
@@ -63,17 +63,24 @@ async function loadAbilities() {
   );
 
   abilities.sort((a, b) => a.pokemon.length - b.pokemon.length);
-  abilities.reverse();
   
-  //create new array for rarity to when bigger the number less rare the ability is, and the chart will show the most rare abilities
-  const rarities: number[] = abilities.map((ability, index) => {
-    return abilities.length - index;
-  });
+  const pokemonsPerAbility = abilities.map((ability) => ability.pokemon.length);
 
-  chartData.labels = abilities.map((ability) => ability.name);
-  chartData.datasets[0].data = rarities;
-
-  console.log(chartData);
+  chartData.value = {
+    labels: abilities.map((ability) => ability.name),
+    datasets: [
+      {
+        label: "Pokemons por habilidade",
+        data: pokemonsPerAbility,
+        backgroundColor: 'rgba(255,99,132,0.2)',
+        borderColor: 'rgba(255,99,132,1)',
+        pointBackgroundColor: 'rgba(255,99,132,1)',
+        pointBorderColor: '#000',
+        pointHoverBackgroundColor: '#000',
+        pointHoverBorderColor: 'rgba(255,99,132,1)',
+      },
+    ],
+  };
 }
 
 onMounted(async () => {
