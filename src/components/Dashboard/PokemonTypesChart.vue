@@ -7,6 +7,7 @@ import { Ref, onMounted, reactive, ref } from "vue";
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "vue-chartjs";
+import { getBackgroundColorsRandomly } from "../../helpers/dashboardHelpers";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -49,10 +50,7 @@ async function loadTypes() {
 
     labels.value = pokemonTypes.map((pokemonType) => pokemonType.name);
     datasetData.value = pokemonTypes.map((pokemonType) => pokemonType.pokemon.length);;
-    backgroundColor.value = pokemonTypes.map(() => {
-        const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-        return `#${randomColor}`;
-    });
+    backgroundColor.value = getBackgroundColorsRandomly(pokemonTypes.length);
 
     chartData.value = {
         labels: labels.value,
@@ -75,7 +73,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="tipos" v-if="chartData.datasets">
+    <div class="tipos" v-if="chartData.datasets">        
         <Doughnut :data="chartData" />
     </div>
 </template>
