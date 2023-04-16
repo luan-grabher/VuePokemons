@@ -69,15 +69,8 @@ onMounted(async () => {
     <div class="search-bar w-100 d-flex justify-content-center mb-4">
       <div class="col-6 d-flex gap-2 align-items-center">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input
-          type="text"
-          class="col"
-          placeholder="Pesquisar pokemon..."
-          aria-label="Pesquisar pokemon"
-          aria-describedby="button-addon2"
-          v-model="searchTerm"
-          @keypress="onKeyPressInput"
-        />
+        <input type="text" class="col" placeholder="Pesquisar pokemon..." aria-label="Pesquisar pokemon"
+          aria-describedby="button-addon2" v-model="searchTerm" @keypress="onKeyPressInput" />
       </div>
     </div>
 
@@ -93,11 +86,7 @@ onMounted(async () => {
 
     <div v-if="!loading && pokemons.length > 0">
       <div class="pokemon-list row justify-content-between">
-        <div
-          v-for="pokemon in pokemons"
-          :key="pokemon.id"
-          class="pokemon-card col-12 col-sm-6 col-md-3 mb-4"
-        >
+        <div v-for="pokemon in pokemons" :key="pokemon.id" class="pokemon-card col-12 col-sm-6 col-md-3 mb-4">
           <PokeCard :pokemon="pokemon" v-if="pokemon.id" />
         </div>
       </div>

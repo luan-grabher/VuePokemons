@@ -1,19 +1,8 @@
 <script lang="ts" setup>
-/*
-- [ ]  Pizza Pokemons por tipo -> /api/v2/type/ (ChartType: Doughnut)
-- [ ]  Quantidade de pokemons por geração -> /api/v2/generation/ (ChartType: Line)
-- [ ]  Habilidades Mais raras -> /api/v2/ability/ (ChartType: Radar) -> formula para calcular a raridade quanto menos pokemons tem a habilidade mais rara ela é
-- [ ]  ???? -> /????? (ChartType: Bar)
-
-*/
-
 import PokemonAbilitiesChart from './PokemonAbilitiesChart.vue';
 import PokemonGenerationChart from './PokemonGenerationChart.vue';
 import PokemonTypesChart from './PokemonTypesChart.vue';
 import PokemonLocationsChart from './PokemonLocationsChart.vue';
-
-
-
 </script>
 
 <template>

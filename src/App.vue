@@ -5,7 +5,7 @@ import Footer from "./components/Layout/Footer.vue";
 
 <template>
   <Header />
-  <router-view style="z-index: 2;" />
+  <router-view style="z-index: 2" />
   <Footer />
 </template>
 
@@ -17,6 +17,10 @@ body {
   background: linear-gradient(to bottom, $dark, $dark-light);
 }
 
+p {
+  margin: 0px;
+}
+
 #app {
   display: flex;
   flex-direction: column;
@@ -24,17 +28,4 @@ body {
   margin: 0;
   padding: 0;
 }
-
-/*#app::before {
-  content: "";  
-  z-index: 1;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("./assets/pokeball.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  margin-top: 10%;
-}*/
-
 </style>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import Dashboard from "../components/Dashboard/Dashboard.vue";
-import PokemonList from "../components/PokemonList/PokemonList.vue";
+import PokemonList from "../components/Pokedex/PokemonList.vue";
 import pokeballSVG from "../assets/pokeball.svg";
 import pokedexSVG from "../assets/pokedex.svg";
 
