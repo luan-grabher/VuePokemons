@@ -15,9 +15,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="w-100" v-if="pokemon">
-    <router-link :to="`/pokemon/${pokemon.name}`">
-      <div class="card p-3 shadow">
+  <div class="w-100 h-100" v-if="pokemon">
+    <router-link :to="`/pokemon/${pokemon.name}`" class="h-100 d-block">
+      <div class="card p-3 shadow h-100">
         <img :src="pokemon.imageSrc" alt="poke-sprite" />
         <div class="pokemon-title">
           <p>#{{ pokemon.id }}</p>

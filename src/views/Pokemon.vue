@@ -2,7 +2,6 @@
 import { defineComponent } from "vue";
 import { PokemonService } from "../services/pokemonService";
 import { IPokemon } from "../interfaces/pokemon-interface";
-import PokeCard from "../components/PokeData/PokeCard.vue";
 
 const pokemonService = new PokemonService();
 
@@ -19,8 +18,7 @@ export default defineComponent({
       `${this.$route.params.name}`
     );
     this.loading = false;
-  },
-  components: { PokeCard },
+  }
 });
 </script>
 

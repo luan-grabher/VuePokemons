@@ -26,7 +26,7 @@ const currentTab = ref(tabs[0]);
 </script>
 
 <template>
-  <div class="home container-lg">
+  <div class="home container">
     <div class="tabs rounded d-flex justify-content-around shadow-sm mb-4">
       <div
         v-for="tab in tabs"
@@ -53,6 +53,9 @@ const currentTab = ref(tabs[0]);
   @import "../assets/scss/variables.scss";
 
 .home {
+  min-width: 375px;
+  max-width: 920px;
+
   .tabs {
     background-color: $secondary;
 
