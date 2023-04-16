@@ -1,33 +1,33 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import Dashboard from "../components/Dashboard/Dashboard.vue";
-import IconPokeball from "../components/Icons/IconPokeball.vue";
 import PokemonList from "../components/PokemonList/PokemonList.vue";
+import pokeballSVG from "../assets/pokeball.svg";
+import pokedexSVG from "../assets/pokedex.svg";
 
 interface Tab {
   name: string;
   component: any;
-  icon: any;
+  svgSrc: string;
 }
 
 const tabs: Tab[] = [
   {
     name: "Dashboard",
-    icon: IconPokeball,
+    svgSrc: pokeballSVG
   } as Tab,
   {
-    name: "Pokemons",
-    icon: IconPokeball,
+    name: "Pokedex",
+    svgSrc: pokedexSVG
   } as Tab,
 ];
 
 const currentTab = ref(tabs[0]);
-const fillIconSelected = ref("#000");
 </script>
 
 <template>
   <div class="home container-lg">
-    <div class="tabs">
+    <div class="tabs rounded d-flex justify-content-around shadow-sm mb-4">
       <div
         v-for="tab in tabs"
         :key="tab.name"
@@ -36,7 +36,7 @@ const fillIconSelected = ref("#000");
         @click="currentTab = tab"
       >
         <div class="icon">
-          <component :is="tab.icon" :fill="fillIconSelected" />
+          <img :src="tab.svgSrc" />
         </div>
         {{ tab.name }}
       </div>
@@ -44,41 +44,44 @@ const fillIconSelected = ref("#000");
 
     <div class="tab-contents">
       <Dashboard v-show="currentTab.name === 'Dashboard'" />
-      <PokemonList v-show="currentTab.name === 'Pokemons'" />
+      <PokemonList v-show="currentTab.name === 'Pokedex'" />
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+  @import "../assets/scss/variables.scss";
+
 .home {
   .tabs {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    height: 50px;
-    background-color: #f5f5f5;
-    border-bottom: 1px solid #e0e0e0;
-    margin-bottom: 20px;
+    background-color: $secondary;
 
     .tab {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
+      padding: 1rem;
       cursor: pointer;
-      transition: all 0.2s ease-in-out;
+      display: flex;
+      align-items: center;
+      font-weight: bold;
 
       .icon {
-        width: 30px;
-        height: 30px;
-        margin-right: 10px;
+        width: 2.5rem;
+        height: 2.5rem;
+        margin-right: 0.5rem;
+
+        img {
+          filter: $filter-gray-light;
+        }
       }
 
       &.active {
-        color: #000;
-        font-weight: bold;
-        border-bottom: 2px solid #000;
+        color: $primary;
+        border-bottom: 4px solid $primary;
+
+        .icon {
+          img {
+          filter: $filter-primary;
+        }
+        }
       }
     }
   }

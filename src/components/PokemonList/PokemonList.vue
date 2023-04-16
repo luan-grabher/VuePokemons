@@ -87,7 +87,7 @@ onMounted(async () => {
         </div>
 
         <div v-if="!loading && pokemons.length > 0">
-            <div class="pokemon-list row mx-2 gap-2 justify-content-center">
+            <div class="pokemon-list row gap-2 justify-content-center">
                 <div v-for="pokemon in pokemons" :key="pokemon.id" class="pokemon-card col-12 col-sm-6 col-md-2">
                     <PokeCard :pokemon="pokemon" v-if="pokemon.id" />
                 </div>

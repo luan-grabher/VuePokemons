@@ -25,7 +25,7 @@ body {
   padding: 0;
 }
 
-#app::before {
+/*#app::before {
   content: "";  
   z-index: 1;
   position: absolute;
@@ -35,6 +35,6 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   margin-top: 10%;
-}
+}*/
 
 </style>

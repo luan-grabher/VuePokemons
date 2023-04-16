@@ -1,7 +1,11 @@
 $primary: #F9BC1A;
+$secondary: #343C64;
 $gray: #F2F2F2;
 $gray-light: #F0F0F2;
 $gray-dark: #606373;
 $black: #13171A;
 $dark: #262C4C;
 $dark-light: #353c61;
+
+$filter-primary: invert(74%) sepia(88%) saturate(731%) hue-rotate(344deg) brightness(100%) contrast(96%);
+$filter-gray-light: invert(100%) sepia(1%) saturate(1697%) hue-rotate(180deg) brightness(97%) contrast(96%);
