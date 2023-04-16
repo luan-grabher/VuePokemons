@@ -2,6 +2,7 @@
 import { IPokemon } from "../../interfaces/pokemon-interface";
 import PokemonSizes from "./PokemonSizes.vue";
 import PokemonTypes from "./PokemonTypes.vue";
+import PokemonAbilities from "./PokemonAbilities.vue";
 
 const props = defineProps({
     pokemon: {
@@ -30,11 +31,7 @@ const pokemon: IPokemon | null = props.pokemon;
           <PokemonSizes :altura="pokemon.altura" :peso="pokemon.peso" />
         </div>
         <div class="pokemon-habilities d-flex gap-2">
-          <p>Habilidades: 
-            <span v-for="habilidade in pokemon.habilidades" :key="habilidade" class="badge bg-secondary">
-              {{ habilidade }}
-            </span>
-          </p>
+          <PokemonAbilities :pokemonAbilities="pokemon.habilidades" />
         </div>
       </div>
     </router-link>
