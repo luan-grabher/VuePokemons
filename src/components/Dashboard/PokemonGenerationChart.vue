@@ -28,16 +28,7 @@ ChartJS.register(
   Legend
 )
 
-let chartData: any = ref({
-  labels: [],
-  datasets: [
-    {
-      label: "Pokemons por geração",
-      data: [],
-      backgroundColor: getRandomColor(),
-    },
-  ],
-});
+let chartData: any = ref({});
 
 async function loadGenerations() {
   const gameClient = new GameClient();
@@ -48,24 +39,20 @@ async function loadGenerations() {
       const generationFromApi = await gameClient.getGenerationByName(
         pokemonGeneration.name
       );
-      const nameWithFirstLetterUppercase =
-        pokemonGeneration.name.charAt(0).toUpperCase() +
-        pokemonGeneration.name.slice(1);
 
       return {
-        ...generationFromApi,
-        name: nameWithFirstLetterUppercase,
+        ...generationFromApi
       };
     })
   );
 
   chartData.value = {
-    labels: pokemonGenerations.map((pokemonGeneration) => pokemonGeneration.name),
+    labels: pokemonGenerations.map((pokemonGeneration) => pokemonGeneration.name.charAt(0).toUpperCase() + pokemonGeneration.name.slice(1)),
     datasets: [
       {
-        label: "Pokemons por geração",
+        label: "Quantity of pokemons",
         data: pokemonGenerations.map((pokemonGeneration) => pokemonGeneration.pokemon_species.length),
-        backgroundColor: getRandomColor(),
+        backgroundColor: "#353c61",
       },
     ]
   }
@@ -78,7 +65,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="tipos">
+  <div class="tipos" v-if="chartData?.labels?.length">
     <Line :data="chartData" />
   </div>
 </template>

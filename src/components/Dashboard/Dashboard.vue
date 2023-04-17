@@ -13,12 +13,12 @@ import PokemonLocationsChart from "./PokemonLocationsChart.vue";
                 <PokemonTypesChart />
             </div>
             <div class="chart col-12 col-md-6">
-                <h2>Most common abilities:</h2>
-                <PokemonAbilitiesChart />
-            </div>
-            <div class="chart col-12 col-md-6">
                 <h2>Pokemom Quantity by Generation:</h2>
                 <PokemonGenerationChart />
+            </div>
+            <div class="chart col-12 col-md-6">
+                <h2>Most common abilities:</h2>
+                <PokemonAbilitiesChart />
             </div>
             <div class="chart col-12 col-md-6">
                 <h2>Locations with most pokemons:</h2>
@@ -32,11 +32,10 @@ import PokemonLocationsChart from "./PokemonLocationsChart.vue";
 @import "../../assets/scss/variables.scss";
 
 .dashboard {
-    background-color: $gray-light;
+    background-color: $gray;
     margin-top: 2rem;
     border-radius: 0.5rem;
     padding: 3rem;
-    opacity: 0.8;
 
     .charts {
         .chart {

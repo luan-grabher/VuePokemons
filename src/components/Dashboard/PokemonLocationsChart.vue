@@ -11,56 +11,56 @@ import {
   Legend,
   BarElement,
   CategoryScale,
-  LinearScale
+  LinearScale,
 } from "chart.js";
 import { onMounted, reactive, ref } from "vue";
 import { getRandomColor } from "../../helpers/dashboardHelpers";
 
 ChartJS.register(
-  CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend
-)
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
-let chartData: any = ref({
-  labels: [],
-  datasets: [
-    {
-      label: "Localizações com mais pokemons",
-      data: [],
-      backgroundColor: getRandomColor(),
-    },
-  ],
-});
+let chartData: any = ref({});
 
 async function loadLocalizations() {
-  const localizationClient  = new LocationClient();
+  const localizationClient = new LocationClient();
 
-  const localizationsAreasFromApi = await localizationClient.listLocationAreas();
+  const localizationsAreasFromApi =
+    await localizationClient.listLocationAreas();
   const localizationsAreas = await Promise.all(
     localizationsAreasFromApi.results.map(async (localizationArea) => {
-      const localizationAreaFromApi = await localizationClient.getLocationAreaByName(
-        localizationArea.name
-      );
-      const nameWithFirstLetterUppercase =
-        localizationArea.name.charAt(0).toUpperCase() +
-        localizationArea.name.slice(1);
+      const localizationAreaFromApi =
+        await localizationClient.getLocationAreaByName(localizationArea.name);
 
       return {
         ...localizationAreaFromApi,
-        name: nameWithFirstLetterUppercase,
       };
     })
   );
 
-  localizationsAreas.sort((a, b) => b.pokemon_encounters.length - a.pokemon_encounters.length);
+  localizationsAreas.sort(
+    (a, b) => b.pokemon_encounters.length - a.pokemon_encounters.length
+  );
   const top10LocalizationsAreas = localizationsAreas.slice(0, 10);
 
   chartData.value = {
-    labels: top10LocalizationsAreas.map((localizationArea) => localizationArea.name),
+    labels: top10LocalizationsAreas.map(
+      (localizationArea) =>
+        localizationArea.name.charAt(0).toUpperCase() +
+        localizationArea.name.slice(1)
+    ),
     datasets: [
       {
-        label: "Localizações com mais pokemons",
-        data: top10LocalizationsAreas.map((localizationArea) => localizationArea.pokemon_encounters.length),
-        backgroundColor: getRandomColor(),
+        label: "Quantity of pokemons",
+        data: top10LocalizationsAreas.map(
+          (localizationArea) => localizationArea.pokemon_encounters.length
+        ),
+        backgroundColor: "#353c61",
       },
     ],
   };
@@ -69,11 +69,10 @@ async function loadLocalizations() {
 onMounted(async () => {
   await loadLocalizations();
 });
-
 </script>
 
 <template>
-  <div class="tipos">
+  <div class="tipos" v-if="chartData?.labels?.length">
     <Bar :data="chartData" />
   </div>
 </template>
