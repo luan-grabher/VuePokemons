@@ -7,7 +7,6 @@ export interface IPokemon {
   types: string[];
   abilities: string[];
   games: string[];
-  movesQuantity: number;
   life: number;
   attack: number;
   defense: number;
