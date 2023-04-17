@@ -24,4 +24,4 @@
 ```
 
 ## Projeto Disponivel online em:
-https://vue-pokemons.vercel.app/
+https://vue-pokemons-bk6lhr9om-luan-grabher.vercel.app
