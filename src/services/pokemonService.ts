@@ -1,4 +1,4 @@
-import { IPokemon } from "../interfaces/pokemon-interface";
+import { IPokemon } from "../interfaces/pokemonInterface";
 import {
   PokemonClient,
   NamedAPIResourceList,

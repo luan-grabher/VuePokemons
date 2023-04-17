@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { onMounted, reactive, Ref, ref } from "vue";
-import { IPokemon } from "../../interfaces/pokemon-interface";
 import { PokemonService } from "../../services/pokemonService";
 import PokeCard from "./PokeCard.vue";
+import { IPokemon } from "../../interfaces/pokemonInterface";
 
 const pokemonService = new PokemonService();
 

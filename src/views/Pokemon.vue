@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { Ref, onMounted, reactive, ref } from "vue";
 import { PokemonService } from "../services/pokemonService";
-import { IPokemon } from "../interfaces/pokemon-interface";
 import { useRoute } from "vue-router";
 import PokemonTypes from "../components/Pokedex/PokemonTypes.vue";
 import PokemonSizes from "../components/Pokedex/PokemonSizes.vue";
 import PokemonAbilities from "../components/Pokedex/PokemonAbilities.vue";
+import { IPokemon } from "../interfaces/pokemonInterface";
 
 const pokemonService = new PokemonService();
 

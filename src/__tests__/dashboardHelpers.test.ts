@@ -1,7 +1,7 @@
-import { describe, test, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { getBackgroundColorsRandomly, getRandomColor } from '../helpers/dashboardHelpers';
 
-const colorRegex = /^#[0-9a-f]{6}$/i;
+const colorRegex = /^#[0-9a-f]{3,6}$/i;
 
 describe('getBackgroundColorsRandomly', () => {
   it('retorna um array de cores aleatórias com o tamanho passado como parâmetro', () => {

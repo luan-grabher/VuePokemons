@@ -1,8 +1,8 @@
 <script  lang="ts" setup>
-import { IPokemon } from "../../interfaces/pokemon-interface";
 import PokemonSizes from "./PokemonSizes.vue";
 import PokemonTypes from "./PokemonTypes.vue";
 import PokemonAbilities from "./PokemonAbilities.vue";
+import { IPokemon } from "../../interfaces/pokemonInterface";
 
 const props = defineProps({
     pokemon: {

@@ -1,4 +1,4 @@
-import { IPokemon } from "../interfaces/pokemon-interface";
+import { IPokemon } from "../interfaces/pokemonInterface";
 import { Pokemon } from "pokenode-ts";
 
 export const normalizePokemon = (pokemon: Pokemon): IPokemon | null => {
