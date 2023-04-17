@@ -10,6 +10,7 @@ export default {
 
 <template>
   <div class="footer-box">
+    Pokedex App &copy; {{ thisYear }}
   </div>
 </template>
 

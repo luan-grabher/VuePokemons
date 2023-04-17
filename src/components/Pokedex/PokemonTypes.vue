@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { defineProps, reactive } from "vue";
 import { pokemonTypes as allPokemonTypes } from "../../helpers/pokemonTypes";
+import { IPokemonType } from "../../interfaces/pokemonTypeInterface";
 
 const props = defineProps({
     pokemonTypes: {
@@ -10,7 +11,7 @@ const props = defineProps({
 });
 
 let pokemonTypesNormalized:
-    { icon: string; color: string; label: string }[] =
+    IPokemonType[] =
     reactive([]);
 
 for (const pokemonType of props.pokemonTypes) {
@@ -19,17 +20,17 @@ for (const pokemonType of props.pokemonTypes) {
 
     pokemonTypesNormalized.push({
         icon: typeInList.icon,
-        color: typeInList.color,
-        label: typeInList.label,
+        color: typeInList.color
     });
 }
 </script>
 
 <template>
     <div class="pokemon-types-container d-flex gap-2">
-        <div v-for="tipo in pokemonTypesNormalized" :key="tipo.label" class="pokemon-type d-flex gap-1" :style="{ backgroundColor: tipo.color }">
-            <i :class="`pokemon-type-icon ${tipo.icon}`" ></i>
-            <span class="pokemon-type-label">{{ tipo.label }}</span>            
+        <div v-for="type, typeName in pokemonTypesNormalized" :key="typeName" class="pokemon-type d-flex gap-1"
+            :style="{ backgroundColor: type.color }">
+            <i :class="`pokemon-type-icon ${type.icon}`"></i>
+            <span class="pokemon-type-label">{{ typeName }}</span>
         </div>
     </div>
 </template>
@@ -47,8 +48,8 @@ for (const pokemonType of props.pokemonTypes) {
         .pokemon-type-label {
             font-size: 0.7rem;
             font-weight: bold;
+            text-transform: capitalize;
         }
     }
 }
-
 </style>

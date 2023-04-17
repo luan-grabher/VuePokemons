@@ -1,4 +1,4 @@
-import { describe, test, expect, it } from 'vitest';
+import { describe, test, expect } from 'vitest';
 import { pokemonTypes } from '../helpers/pokemonTypes';
 
 const colorRegex = /^#[0-9a-f]{6}$/i;
@@ -38,7 +38,6 @@ describe('pokemonTypes', () => {
     pokemonTypesNames.forEach((type) => {
       expect(pokemonTypes[type]).toHaveProperty('icon');
       expect(pokemonTypes[type]).toHaveProperty('color');
-      expect(pokemonTypes[type]).toHaveProperty('label');
     });
   });
 

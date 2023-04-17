@@ -4,7 +4,7 @@ import PokemonTypes from "./PokemonTypes.vue";
 import PokemonAbilities from "./PokemonAbilities.vue";
 import { IPokemon } from "../../interfaces/pokemonInterface";
 
-const props = defineProps({
+defineProps({
     pokemon: {
         type: Object as () => IPokemon | null,
         required: true

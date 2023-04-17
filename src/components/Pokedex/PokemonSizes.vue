@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { Ref, defineProps, ref } from "vue";
+import { defineProps } from "vue";
 
 
-const props = defineProps({
+defineProps({
     height: {
         type: Number,
         required: true,

@@ -11,6 +11,7 @@ import {
   LinearScale,
 } from "chart.js";
 import { onMounted, ref } from "vue";
+import { capitalizeFirstWordLetters, getResultsFromApi } from "../../helpers/dashboardHelpers";
 
 ChartJS.register(
   Title,
@@ -24,27 +25,15 @@ ChartJS.register(
 let chartData: any = ref({});
 
 async function loadAbilities() {
-  const pokemonClient = new PokemonClient();
-
-  const abilitiesFromApi = await pokemonClient.listAbilities();
-  const abilities = await Promise.all(
-    abilitiesFromApi.results.map(async (ability) => {
-      const abilityFromApi = await pokemonClient.getAbilityByName(ability.name);
-
-      return {
-        ...abilityFromApi
-      };
-    })
-  );
-
-  abilities.sort((a, b) => b.pokemon.length - a.pokemon.length);
+  const abilities = await getResultsFromApi(PokemonClient, "listAbilities", "getAbilityByName");
+  abilities.sort((a: any, b: any) => b.pokemon.length - a.pokemon.length);
 
   chartData.value = {
-    labels: abilities.map((ability) => ability.name.charAt(0).toUpperCase() + ability.name.slice(1)),
+    labels: abilities.map((ability: any) => capitalizeFirstWordLetters(ability.name)),
     datasets: [
       {
         label: "Quantity of pokemons",
-        data: abilities.map((ability) => ability.pokemon.length),
+        data: abilities.map((ability: any) => ability.pokemon.length),
         backgroundColor: "#F9BC1A",
       },
     ],

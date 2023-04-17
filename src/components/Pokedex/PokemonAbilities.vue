@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { defineProps } from "vue";
 
-const props = defineProps({
+defineProps({
     pokemonAbilities: {
         type: Array as () => string[],
         required: true,
@@ -12,10 +12,10 @@ const props = defineProps({
 
 <template>
     <div class="pokemon-abilities-container">
-        <p>Habilidades: </p>
+        <p>Abilities: </p>
         <div class="abilities">
-            <span v-for="habilidade in pokemonAbilities" :key="habilidade" class="ability">
-                {{ habilidade }}
+            <span v-for="ability in pokemonAbilities" :key="ability" class="ability">
+                {{ ability }}
             </span>
         </div>        
     </div>
