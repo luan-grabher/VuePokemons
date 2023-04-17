@@ -22,6 +22,12 @@ export class PokemonService {
     const isAllPokemonsAlreadyFetched: boolean = this.allPokemons.length > 0;
     if (isAllPokemonsAlreadyFetched) return;
 
+    const allPokemonsCached= sessionStorage.getItem("allPokemons");
+    if (allPokemonsCached) {
+      this.allPokemons = JSON.parse(allPokemonsCached);
+      return;
+    }
+
     const allPokemonsApi : NamedAPIResourceList = await this.client.listPokemons(0, 10000);
 
     const allPokemons: IPokemon[] = await Promise.all(
@@ -34,6 +40,7 @@ export class PokemonService {
     );
 
     this.allPokemons = allPokemons;
+    sessionStorage.setItem("allPokemons", JSON.stringify(allPokemons));    
   }
 
   public async getPokemons(

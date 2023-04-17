@@ -67,21 +67,21 @@ onMounted(async () => {
 <template>
   <div class="pokemon-list-container">
     <div class="search-bar w-100 d-flex justify-content-center mb-4">
-      <div class="col-6 d-flex gap-2 align-items-center">
+      <div class="col-10 col-md-6 d-flex gap-2 align-items-center">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" class="col" placeholder="Pesquisar pokemon..." aria-label="Pesquisar pokemon"
+        <input type="text" class="col" placeholder="Search pokemon..." aria-label="Search pokemon"
           aria-describedby="button-addon2" v-model="searchTerm" @keypress="onKeyPressInput" />
       </div>
     </div>
 
     <div v-if="loading" class="loading">
       <div class="spinner-border" role="status">
-        <span class="visually-hidden">Carregando...</span>
+        <span class="visually-hidden">Loading...</span>
       </div>
     </div>
 
     <div v-if="!loading && pokemons.length === 0" class="no-pokemons">
-      <h1>Nenhum pokemon encontrado</h1>
+      <h1>No pokemon found</h1>
     </div>
 
     <div v-if="!loading && pokemons.length > 0">
@@ -91,13 +91,13 @@ onMounted(async () => {
         </div>
       </div>
 
-      <div class="paginator w-100 d-flex gap-4 justify-content-center mt-4">
+      <div class="paginator w-100 d-flex gap-4 justify-content-center mt-4" v-if="!searchTerm">
         <button class="btn" type="button" @click="getPreviousPage">
           <i class="fa-solid fa-chevron-left"></i>
-          Anterior
+          Previous
         </button>
         <button class="btn" type="button" @click="getNextPage">
-          Próximo
+          Next
           <i class="fa-solid fa-chevron-right"></i>
         </button>
       </div>
