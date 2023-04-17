@@ -31,7 +31,7 @@ export const normalizePokemon = (pokemon: Pokemon): IPokemon | null => {
 
 function getPokemonImageSrc(pokemon: Pokemon): string {
   const defaultImageSrc: string =
-    "https://via.placeholder.com/96x96.png?text=Pokemon+nao+encontrado";
+    "https://via.placeholder.com/96x96.png?text=No+Image";
   const defaultFrontImageSrc: string | null = pokemon?.sprites?.front_default;
   const homeImageSrc: string | null | undefined =
     pokemon?.sprites?.other?.home?.front_default;
