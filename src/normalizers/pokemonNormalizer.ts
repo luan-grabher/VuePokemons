@@ -19,7 +19,6 @@ export const normalizePokemon = (pokemon: Pokemon): IPokemon | null => {
     types: pokemon.types.map((type) => type.type.name),
     abilities: pokemon.abilities.map((ability) => ability.ability.name),
     games: pokemon.game_indices.map((game) => game.version.name),
-    movesQuantity: pokemon.moves.length,
     life: pokemon.stats[0].base_stat,
     attack: pokemon.stats[1].base_stat,
     defense: pokemon.stats[2].base_stat,
