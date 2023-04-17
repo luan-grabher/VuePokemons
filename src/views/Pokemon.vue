@@ -38,24 +38,24 @@ onMounted(async () => {
 
       <div class="pokemon-details col-12 col-md-4 pt-3 pt-md-0">
         <div class="pokemon-types">
-          <PokemonTypes :pokemonTypes="pokemon.tipos" />
+          <PokemonTypes :pokemonTypes="pokemon.types" />
         </div>
         <div class="pokemon-sizes">
-          <PokemonSizes :altura="pokemon.altura" :peso="pokemon.peso" textAlign="start" />
+          <PokemonSizes :height="pokemon.height" :weight="pokemon.weight" textAlign="start" />
         </div>
         <div class="pokemon-habilities d-flex gap-2">
-          <PokemonAbilities :pokemonAbilities="pokemon.habilidades" />
+          <PokemonAbilities :pokemonAbilities="pokemon.abilities" />
         </div>
         <div class="base-status">
           <h5>Base Status:</h5>
 
           <div class="base-status-items d-flex justify-content-between flex-wrap gap-2">
-            <div>HP: {{ pokemon.vida }}</div>
-            <div>Attack: {{ pokemon.ataque }}</div>
-            <div>Defense: {{ pokemon.defesa }}</div>
-            <div>Sp. Atk: {{ pokemon.ataqueEspecial }}</div>
-            <div>Sp. Def: {{ pokemon.defesaEspecial }}</div>
-            <div>Speed: {{ pokemon.velocidade }}</div>
+            <div>HP: {{ pokemon.life }}</div>
+            <div>Attack: {{ pokemon.attack }}</div>
+            <div>Defense: {{ pokemon.defense }}</div>
+            <div>Sp. Atk: {{ pokemon.spAttack }}</div>
+            <div>Sp. Def: {{ pokemon.spDefense }}</div>
+            <div>Speed: {{ pokemon.speed }}</div>
           </div>
         </div>
 

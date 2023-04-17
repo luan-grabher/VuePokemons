@@ -14,27 +14,29 @@ export const normalizePokemon = (pokemon: Pokemon): IPokemon | null => {
     id: pokemon?.id,
     name: nameUcaseFirst,
     imageSrc: getPokemonImageSrc(pokemon),
-    peso: pokemon.weight / 10,
-    altura: pokemon.height * 10,
-    tipos: pokemon.types.map((type) => type.type.name),
-    habilidades: pokemon.abilities.map((ability) => ability.ability.name),
+    weight: pokemon.weight / 10,
+    height: pokemon.height * 10,
+    types: pokemon.types.map((type) => type.type.name),
+    abilities: pokemon.abilities.map((ability) => ability.ability.name),
     games: pokemon.game_indices.map((game) => game.version.name),
-    quantidadeMovimentosDisponiveis: pokemon.moves.length,
-    vida: pokemon.stats[0].base_stat,
-    ataque: pokemon.stats[1].base_stat,
-    defesa: pokemon.stats[2].base_stat,
-    ataqueEspecial: pokemon.stats[3].base_stat,
-    defesaEspecial: pokemon.stats[4].base_stat,
-    velocidade: pokemon.stats[5].base_stat,
-  };
+    movesQuantity: pokemon.moves.length,
+    life: pokemon.stats[0].base_stat,
+    attack: pokemon.stats[1].base_stat,
+    defense: pokemon.stats[2].base_stat,
+    spAttack: pokemon.stats[3].base_stat,
+    spDefense: pokemon.stats[4].base_stat,
+    speed: pokemon.stats[5].base_stat,
+  } as IPokemon;
 };
 
+const defaultImageSrc: string = "https://via.placeholder.com/96x96.png?text=No+Image";
+
 function getPokemonImageSrc(pokemon: Pokemon): string {
-  const defaultImageSrc: string =
-    "https://via.placeholder.com/96x96.png?text=No+Image";
-  const defaultFrontImageSrc: string | null = pokemon?.sprites?.front_default;
-  const homeImageSrc: string | null | undefined =
-    pokemon?.sprites?.other?.home?.front_default;
+  const pokemonSprites = pokemon?.sprites;
+  if (!pokemonSprites) return defaultImageSrc;
+
+  const defaultFrontImageSrc: string | null = pokemonSprites?.front_default;
+  const homeImageSrc: string | null | undefined = pokemonSprites?.other?.home?.front_default;
 
   return homeImageSrc || defaultFrontImageSrc || defaultImageSrc;
 }

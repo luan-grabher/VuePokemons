@@ -3,11 +3,11 @@ import { Ref, defineProps, ref } from "vue";
 
 
 const props = defineProps({
-    altura: {
+    height: {
         type: Number,
         required: true,
     },
-    peso: {
+    weight: {
         type: Number,
         required: true,
     },
@@ -23,19 +23,19 @@ const props = defineProps({
         <div class="col-6" :class="`text-${textAlign || 'center'}`">
             <div class="size-label">
                 <i class="fa-solid fa-up-down"></i>
-                Altura
+                Height
             </div>
             <div class="size-value">
-                {{ altura }}cm
+                {{ height }}cm
             </div>
         </div>
         <div class="col-6" :class="`text-${textAlign || 'center'}`">
         <div class="size-label">
             <i class="fa-solid fa-weight-hanging"></i>
-            Peso
+            Weight
         </div>
         <div class="size-value">
-            {{ peso }}kg
+            {{ weight }}kg
         </div>
     </div>
 </div></template>

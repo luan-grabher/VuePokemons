@@ -9,10 +9,10 @@ describe('normalizePokemon', () => {
         name: 'Charizard',
         imageSrc:
             'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/6.png',
-        peso: 90.5,
-        altura: 170,
-        tipos: ['fire', 'flying'],
-        habilidades: ['blaze', 'solar-power'],
+        weight: 90.5,
+        height: 170,
+        types: ['fire', 'flying'],
+        abilities: ['blaze', 'solar-power'],
         games: [
             'red',
             'blue',
@@ -35,13 +35,12 @@ describe('normalizePokemon', () => {
             'black-2',
             'white-2'
         ],
-        quantidadeMovimentosDisponiveis: 125,
-        vida: 78,
-        ataque: 84,
-        defesa: 78,
-        ataqueEspecial: 109,
-        defesaEspecial: 85,
-        velocidade: 100,
+        life: 78,
+        attack: 84,
+        defense: 78,
+        spAttack: 109,
+        spDefense: 85,
+        speed: 100,
     };
 
     test('Deve retornar sem imagem', async () => {

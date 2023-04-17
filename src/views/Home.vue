@@ -7,7 +7,6 @@ import pokedexSVG from "../assets/pokedex.svg";
 
 interface Tab {
   name: string;
-  component: any;
   svgSrc: string;
 }
 

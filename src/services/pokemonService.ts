@@ -66,7 +66,11 @@ export class PokemonService {
     const lowerCaseSearch = name.toLowerCase();
 
     const pokemonOnList = this.allPokemons.find(
-      (pokemon) => !!pokemon?.tipos && pokemon.name.toLowerCase() === lowerCaseSearch
+      (pokemon) => {
+        const hasTypes = !!pokemon.types.length;
+        const isSameName = pokemon.name.toLowerCase() === lowerCaseSearch;
+        return hasTypes && isSameName;
+      }
     );
     if (pokemonOnList) return pokemonOnList;
 
@@ -79,17 +83,7 @@ export class PokemonService {
   public async findPokemonsBySearchTerm(
     searchTerm: string
   ): Promise<IPokemon[]> {
-    const isTermInteger: boolean = Number.isInteger(Number(searchTerm));
-
-    if (isTermInteger) {
-      const pokemon = await this.getPokemon(searchTerm);
-      if (!pokemon) return [];
-
-      return [pokemon];
-    }
-
     const termLowerCase = searchTerm.toLowerCase();
-
 
     const pokemonsFound = this.allPokemons.filter((pokemon) => {
       const pokemonNameLowerCase = pokemon.name.toLowerCase();

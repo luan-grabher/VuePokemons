@@ -22,13 +22,13 @@ const props = defineProps({
           <p class="pokemon-id" >#{{ pokemon.id }}</p>
         </div>
         <div class="pokemon-types">
-          <PokemonTypes :pokemonTypes="pokemon.tipos" />
+          <PokemonTypes :pokemonTypes="pokemon.types" />
         </div>
         <div class="pokemon-sizes">
-          <PokemonSizes :altura="pokemon.altura" :peso="pokemon.peso" />
+          <PokemonSizes :height="pokemon.height" :weight="pokemon.weight" />
         </div>
         <div class="pokemon-habilities d-flex gap-2">
-          <PokemonAbilities :pokemonAbilities="pokemon.habilidades" />
+          <PokemonAbilities :pokemonAbilities="pokemon.abilities" />
         </div>
       </div>
     </router-link>
