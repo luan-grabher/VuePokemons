@@ -27,4 +27,4 @@ Para mostrar os graficos e listar os pokemons são feitas muitas requisições a
 ```
 
 ## Projeto Disponivel online em:
-https://vue-pokemons-bk6lhr9om-luan-grabher.vercel.app
+https://vue-pokemons.vercel.app/
