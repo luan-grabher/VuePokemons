@@ -67,7 +67,7 @@ onMounted(async () => {
 <template>
   <div class="pokemon-list-container">
     <div class="search-bar w-100 d-flex justify-content-center mb-4">
-      <div class="col-10 col-md-6 d-flex gap-2 align-items-center">
+      <div class="col-12 col-md-6 d-flex gap-2 align-items-center">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" class="col" placeholder="Search pokemon..." aria-label="Search pokemon"
           aria-describedby="button-addon2" v-model="searchTerm" @keypress="onKeyPressInput" />

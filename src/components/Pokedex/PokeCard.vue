@@ -16,7 +16,7 @@ const props = defineProps({
   <div class="w-100 h-100" v-if="pokemon">
     <router-link :to="`/pokemon/${pokemon.name}`" class="h-100 d-block">
       <div class="card px-3 pb-3 shadow h-100">
-        <img :src="pokemon.imageSrc" alt="poke-sprite"/>
+        <img :src="pokemon.imageSrc" alt="poke-sprite" class="col-8 col-md-12 mx-auto" />
         <div class="pokemon-title">          
           <p class="pokemon-name">{{ pokemon.name }}</p>
           <p class="pokemon-id" >#{{ pokemon.id }}</p>

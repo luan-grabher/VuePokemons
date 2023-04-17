@@ -37,6 +37,10 @@ import PokemonLocationsChart from "./PokemonLocationsChart.vue";
     border-radius: 0.5rem;
     padding: 3rem;
 
+    @media screen and (max-width: 490px) {
+        padding: 1rem;
+    }
+
     .charts {
         .chart {
             padding-bottom: 4rem;
@@ -47,6 +51,10 @@ import PokemonLocationsChart from "./PokemonLocationsChart.vue";
                 text-transform: uppercase;
                 font-size: 1.2rem;
                 font-weight: bold;
+            }
+
+            canvas {
+                margin-inline: auto;
             }
         }
     }

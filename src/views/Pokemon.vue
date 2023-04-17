@@ -26,17 +26,17 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="container" v-if="pokemon?.id">
+  <div class="container px-5 px-md-0" v-if="pokemon?.id">
     <div class="pokemon-title">
       <p class="pokemon-id">#{{ pokemon.id }}</p>
       <p class="pokemon-name">{{ pokemon.name }}</p>
     </div>
     <div class="pokemon-details-and-image row">
-      <div class="pokemon-sprite col-12 col-md-7">
-        <img :src="pokemon.imageSrc" alt="poke-sprite" />
+      <div class="pokemon-sprite col-12 col-md-7 mx-auto">
+        <img :src="pokemon.imageSrc" alt="poke-sprite" class="mx-auto d-block" />
       </div>
 
-      <div class="pokemon-details col-12 col-md-4">
+      <div class="pokemon-details col-12 col-md-4 pt-3 pt-md-0">
         <div class="pokemon-types">
           <PokemonTypes :pokemonTypes="pokemon.tipos" />
         </div>
