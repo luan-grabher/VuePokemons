@@ -18,19 +18,16 @@ for (const pokemonType of props.pokemonTypes) {
     const typeInList = allPokemonTypes[pokemonType];
     if (!typeInList) continue;
 
-    pokemonTypesNormalized.push({
-        icon: typeInList.icon,
-        color: typeInList.color
-    });
+    pokemonTypesNormalized.push(typeInList);
 }
 </script>
 
 <template>
     <div class="pokemon-types-container d-flex gap-2">
-        <div v-for="type, typeName in pokemonTypesNormalized" :key="typeName" class="pokemon-type d-flex gap-1"
+        <div v-for="type, key in pokemonTypesNormalized" :key="key" class="pokemon-type d-flex gap-1"
             :style="{ backgroundColor: type.color }">
             <i :class="`pokemon-type-icon ${type.icon}`"></i>
-            <span class="pokemon-type-label">{{ typeName }}</span>
+            <span class="pokemon-type-label">{{ type.name }}</span>
         </div>
     </div>
 </template>

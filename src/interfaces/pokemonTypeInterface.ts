@@ -1,4 +1,5 @@
 export interface IPokemonType {
     icon: string,
-    color: string
+    color: string,
+    name: string
 }

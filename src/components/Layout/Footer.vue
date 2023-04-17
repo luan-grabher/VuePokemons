@@ -9,7 +9,7 @@ export default {
 </script>
 
 <template>
-  <div class="footer-box">
+  <div class="footer-box w-100 text-center mb-5">
     Pokedex App &copy; {{ thisYear }}
   </div>
 </template>
