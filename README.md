@@ -1,6 +1,6 @@
 # VuePokemons
 
-Para mostrar os graficos e listar os pokemons são feitas muitas requisições a api até entrar em cache, neste processo a pokeapi pode demorar muito para responder, então aguarde um pouco e recarregue a pagina.
+Nesta pequena aplicação com VueJs3 e Bootatrap 5 você poderá ver minhas habilidades com VueJs3, componentização, clean code, consumo de API e testes unitários.
 
 ## Tecnologias
 * Vue
